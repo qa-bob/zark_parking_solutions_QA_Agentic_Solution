@@ -8,42 +8,49 @@ test.describe('Navigation Links Integrity @regression', () => {
     await homePage.goto();
   });
 
-  test('Blog link in nav is not broken @regression', async ({ page }) => {
+  test('Zark Parking nav link is valid @regression', async ({ page }) => {
     const nav = new NavBar(page);
-    const href = await nav.getBlogHref();
+    const href = await nav.getZarkParkingHref();
     expect(href).toBeTruthy();
-    expect(href).toMatch(/blog/);
+    expect(href).toMatch(/short-term-parking/);
   });
 
-  test('Docs link in nav is not broken @regression', async ({ page }) => {
+  test('Rentable Items nav link is valid @regression', async ({ page }) => {
     const nav = new NavBar(page);
-    const href = await nav.getDocsHref();
+    const href = await nav.getRentableItemsHref();
     expect(href).toBeTruthy();
-    expect(href).toMatch(/docs\.hud\.io/);
+    expect(href).toMatch(/rentable-items/);
   });
 
-  test('About us link in nav is not broken @regression', async ({ page }) => {
-    const aboutLink = page.locator('nav').getByRole('link', { name: 'About us' }).first();
-    const href = await aboutLink.getAttribute('href');
-    expect(href).toMatch(/about-us/);
-  });
-
-  test('Book a demo link in nav is not broken @regression', async ({ page }) => {
+  test('Parking Enforcement nav link is valid @regression', async ({ page }) => {
     const nav = new NavBar(page);
-    const href = await nav.getBookDemoHref();
+    const href = await nav.getParkingEnforcementHref();
     expect(href).toBeTruthy();
-    expect(href).toMatch(/book-a-demo/);
+    expect(href).toMatch(/parking-enforcement/);
   });
 
-  test('Log in link in nav points to app.hud.io @regression', async ({ page }) => {
+  test('Resident Guide nav link is valid @regression', async ({ page }) => {
     const nav = new NavBar(page);
-    const href = await nav.getLoginHref();
-    expect(href).toMatch(/app\.hud\.io/);
+    const href = await nav.getResidentGuideHref();
+    expect(href).toBeTruthy();
+    expect(href).toMatch(/resident-guide/);
+  });
+
+  test('Contact Sales nav link is valid @regression', async ({ page }) => {
+    const nav = new NavBar(page);
+    const href = await nav.getContactSalesHref();
+    expect(href).toBeTruthy();
+    expect(href).toMatch(/contact-sales/);
+  });
+
+  test('Reserve a space link points to app.zarkhq.com @regression', async ({ page }) => {
+    const nav = new NavBar(page);
+    const href = await nav.getReserveSpaceHref();
+    expect(href).toMatch(/app\.zarkhq\.com/);
   });
 
   test('all footer links have non-empty hrefs @regression', async ({ page }) => {
-    const footerLinks = page.locator('footer a[href]');
-    const hrefs = await footerLinks.evaluateAll(els =>
+    const hrefs = await page.locator('footer a[href]').evaluateAll(els =>
       els.map(e => e.getAttribute('href')).filter(h => h)
     );
     expect(hrefs.length).toBeGreaterThan(0);
@@ -53,33 +60,28 @@ test.describe('Navigation Links Integrity @regression', () => {
     }
   });
 
-  test('Terms of Service footer link navigates correctly @regression', async ({ page }) => {
-    const tosLink = page.locator('footer').getByRole('link', { name: /terms of service/i });
-    await tosLink.click();
-    await expect(page).toHaveURL(/terms-of-service/);
+  test('Terms and Conditions footer link navigates correctly @regression', async ({ page }) => {
+    await page.locator('footer').getByRole('link', { name: /terms and conditions/i }).click();
+    await expect(page).toHaveURL(/terms/);
   });
 
   test('Privacy Policy footer link navigates correctly @regression', async ({ page }) => {
-    const privacyLink = page.locator('footer').getByRole('link', { name: /privacy policy/i });
-    await privacyLink.click();
+    await page.locator('footer').getByRole('link', { name: /privacy policy/i }).click();
     await expect(page).toHaveURL(/privacy-policy/);
   });
 
-  test('About us footer link navigates correctly @regression', async ({ page }) => {
-    const aboutLink = page.locator('footer').getByRole('link', { name: 'About us' });
-    await aboutLink.click();
-    await expect(page).toHaveURL(/about-us/);
+  test('Zark Parking footer link navigates correctly @regression', async ({ page }) => {
+    await page.locator('footer').getByRole('link', { name: /^zark parking$/i }).click();
+    await expect(page).toHaveURL(/short-term-parking/);
   });
 
-  test('Careers footer link navigates correctly @regression', async ({ page }) => {
-    const careersLink = page.locator('footer').getByRole('link', { name: 'Careers' });
-    await careersLink.click();
-    await expect(page).toHaveURL(/careers/);
+  test('Rentable Items footer link navigates correctly @regression', async ({ page }) => {
+    await page.locator('footer').getByRole('link', { name: /^rentable items$/i }).click();
+    await expect(page).toHaveURL(/rentable-items/);
   });
 
-  test('Contact us footer link navigates correctly @regression', async ({ page }) => {
-    const contactLink = page.locator('footer').getByRole('link', { name: /contact us/i });
-    await contactLink.click();
-    await expect(page).toHaveURL(/contact-us/);
+  test('PMS Integrations footer link navigates correctly @regression', async ({ page }) => {
+    await page.locator('footer').getByRole('link', { name: /pms integrations/i }).click();
+    await expect(page).toHaveURL(/pms-integrations/);
   });
 });

@@ -1,8 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
 
 /**
- * Component POM for the hud.io navigation bar.
- * Used across all pages that share the global nav.
+ * Component POM for the zarkparking.com navigation bar.
  */
 export class NavBar {
   private readonly page: Page;
@@ -14,65 +13,77 @@ export class NavBar {
   // ─── Locators ────────────────────────────────────────────────────────────────
 
   private get nav(): Locator {
-    return this.page.locator('nav').first();
+    return this.page.locator('header, nav').first();
   }
 
-  private get logo(): Locator {
-    return this.page.locator('nav a[href*="hud.io"], header a[href*="hud.io"]').first();
+  private get zarkParkingLink(): Locator {
+    return this.page.locator('a[href*="short-term-parking"]').first();
   }
 
-  private get blogLink(): Locator {
-    return this.page.locator('nav').getByRole('link', { name: 'Blog' }).first();
+  private get rentableItemsLink(): Locator {
+    return this.page.locator('a[href*="rentable-items"]').first();
   }
 
-  private get docsLink(): Locator {
-    return this.page.locator('nav').getByRole('link', { name: 'Docs' }).first();
+  private get parkingEnforcementLink(): Locator {
+    return this.page.locator('a[href*="parking-enforcement"]').first();
   }
 
-  private get aboutUsLink(): Locator {
-    return this.page.locator('nav').getByRole('link', { name: 'About us' }).first();
+  private get residentGuideLink(): Locator {
+    return this.page.locator('a[href*="resident-guide"]').first();
   }
 
-  private get bookDemoLink(): Locator {
-    return this.page.locator('a[href*="book-a-demo"]').first();
+  private get contactSalesLink(): Locator {
+    return this.page.locator('a[href*="contact-sales"][href*="hsLang"]').first();
   }
 
-  private get loginLink(): Locator {
-    return this.page.locator('a[href*="app.hud.io"]').first();
+  private get reserveSpaceLink(): Locator {
+    return this.page.locator('a[href*="app.zarkhq.com"]').first();
   }
 
   // ─── Actions ─────────────────────────────────────────────────────────────────
 
-  async clickBlog(): Promise<void> {
-    await this.blogLink.click();
+  async clickZarkParking(): Promise<void> {
+    await this.zarkParkingLink.click();
   }
 
-  async clickAboutUs(): Promise<void> {
-    await this.aboutUsLink.click();
+  async clickRentableItems(): Promise<void> {
+    await this.rentableItemsLink.click();
   }
 
-  async clickBookDemo(): Promise<void> {
-    await this.bookDemoLink.click();
+  async clickParkingEnforcement(): Promise<void> {
+    await this.parkingEnforcementLink.click();
   }
 
-  async clickLogin(): Promise<void> {
-    await this.loginLink.click();
+  async clickResidentGuide(): Promise<void> {
+    await this.residentGuideLink.click();
   }
 
-  async getBlogHref(): Promise<string | null> {
-    return this.blogLink.getAttribute('href');
+  async clickContactSales(): Promise<void> {
+    await this.contactSalesLink.click();
   }
 
-  async getDocsHref(): Promise<string | null> {
-    return this.docsLink.getAttribute('href');
+  async getZarkParkingHref(): Promise<string | null> {
+    return this.zarkParkingLink.getAttribute('href');
   }
 
-  async getLoginHref(): Promise<string | null> {
-    return this.loginLink.getAttribute('href');
+  async getRentableItemsHref(): Promise<string | null> {
+    return this.rentableItemsLink.getAttribute('href');
   }
 
-  async getBookDemoHref(): Promise<string | null> {
-    return this.bookDemoLink.getAttribute('href');
+  async getParkingEnforcementHref(): Promise<string | null> {
+    return this.parkingEnforcementLink.getAttribute('href');
+  }
+
+  async getResidentGuideHref(): Promise<string | null> {
+    return this.residentGuideLink.getAttribute('href');
+  }
+
+  async getContactSalesHref(): Promise<string | null> {
+    return this.contactSalesLink.getAttribute('href');
+  }
+
+  async getReserveSpaceHref(): Promise<string | null> {
+    return this.reserveSpaceLink.getAttribute('href');
   }
 
   // ─── Assertions ──────────────────────────────────────────────────────────────
@@ -81,26 +92,35 @@ export class NavBar {
     await expect(this.nav).toBeVisible();
   }
 
-  async expectBlogLinkVisible(): Promise<void> {
-    await expect(this.blogLink).toBeVisible();
+  async expectZarkParkingLinkVisible(): Promise<void> {
+    await expect(this.zarkParkingLink).toBeVisible();
   }
 
-  async expectAboutUsLinkVisible(): Promise<void> {
-    await expect(this.aboutUsLink).toBeVisible();
+  async expectRentableItemsLinkVisible(): Promise<void> {
+    await expect(this.rentableItemsLink).toBeVisible();
   }
 
-  async expectBookDemoLinkVisible(): Promise<void> {
-    await expect(this.bookDemoLink).toBeVisible();
+  async expectParkingEnforcementLinkVisible(): Promise<void> {
+    await expect(this.parkingEnforcementLink).toBeVisible();
   }
 
-  async expectLoginLinkVisible(): Promise<void> {
-    await expect(this.loginLink).toBeVisible();
+  async expectResidentGuideLinkVisible(): Promise<void> {
+    await expect(this.residentGuideLink).toBeVisible();
+  }
+
+  async expectContactSalesLinkVisible(): Promise<void> {
+    await expect(this.contactSalesLink).toBeVisible();
+  }
+
+  async expectReserveSpaceLinkVisible(): Promise<void> {
+    await expect(this.reserveSpaceLink).toBeVisible();
   }
 
   async expectAllNavLinksVisible(): Promise<void> {
-    await this.expectBlogLinkVisible();
-    await this.expectAboutUsLinkVisible();
-    await this.expectBookDemoLinkVisible();
-    await this.expectLoginLinkVisible();
+    await this.expectZarkParkingLinkVisible();
+    await this.expectRentableItemsLinkVisible();
+    await this.expectParkingEnforcementLinkVisible();
+    await this.expectResidentGuideLinkVisible();
+    await this.expectContactSalesLinkVisible();
   }
 }

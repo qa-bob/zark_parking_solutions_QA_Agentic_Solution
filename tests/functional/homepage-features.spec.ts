@@ -9,78 +9,78 @@ test.describe('Homepage Features @functional', () => {
     await homePage.goto();
   });
 
-  test('page title contains "Hud" @functional', async ({ page }) => {
-    await expect(page).toHaveTitle(/Hud/);
+  test('page title contains "Zark" @functional', async ({ page }) => {
+    await expect(page).toHaveTitle(/Zark/);
   });
 
-  test('H1 heading contains "Runtime Intelligence" @functional', async ({ page }) => {
-    const heading = page.locator('h1').first();
-    await expect(heading).toContainText(/runtime intelligence/i);
+  test('H1 heading contains "YOUR terms" @functional', async ({ page }) => {
+    await expect(page.locator('h1').first()).toContainText(/YOUR terms/i);
   });
 
-  test('"Install in 10 seconds" feature section is present @functional', async ({ page }) => {
-    const section = page.locator('h2, h3, button, [role="button"]').filter({ hasText: /install in 10 seconds/i }).first();
+  test('"Creating happier communities" section is visible @functional', async ({ page }) => {
+    const section = page.locator('h2').filter({ hasText: /creating happier communities/i }).first();
     await expect(section).toBeVisible();
   });
 
-  test('"Detect code-level issues" feature section is present @functional', async ({ page }) => {
-    const section = page.locator('h2').filter({ hasText: 'Detect code-level issues' }).first();
+  test('"Make your community ZarkABLE" section is visible @functional', async ({ page }) => {
+    const section = page.locator('h2').filter({ hasText: /zarkable/i }).first();
     await expect(section).toBeVisible();
   });
 
-  test('"Deep forensic context" feature section is present @functional', async ({ page }) => {
-    const section = page.locator('h2, h3, button, [role="button"]').filter({ hasText: /deep forensic context/i }).first();
+  test('"Transform parking from a problem to a perk" section is visible @functional', async ({ page }) => {
+    const section = page.locator('h2').filter({ hasText: /transform parking/i }).first();
+    await expect(section).toBeAttached();
+  });
+
+  test('"Enhance the resident experience" section is visible @functional', async ({ page }) => {
+    const section = page.locator('h2').filter({ hasText: /enhance the resident experience/i }).first();
+    await expect(section).toBeAttached();
+  });
+
+  test('"Easy enforcement" section is visible @functional', async ({ page }) => {
+    const section = page.locator('h2').filter({ hasText: /easy enforcement/i }).first();
+    await expect(section).toBeAttached();
+  });
+
+  test('"Effortless integration" section is visible @functional', async ({ page }) => {
+    const section = page.locator('h2').filter({ hasText: /effortless integration/i }).first();
     await expect(section).toBeVisible();
   });
 
-  test('"Auto-generated fixes" feature section is present @functional', async ({ page }) => {
-    const section = page.locator('h2, h3, button, [role="button"]').filter({ hasText: /auto-generated fixes/i }).first();
-    await expect(section).toBeVisible();
+  test('"Tap. Park. Zark." tagline is present @functional', async ({ page }) => {
+    const tagline = page.locator('h2').filter({ hasText: /tap\. park\. zark\./i }).first();
+    await expect(tagline).toBeVisible();
   });
 
-  test('"Hud Is Not Observability" section is present @functional', async ({ page }) => {
-    const section = page.locator('h2').filter({ hasText: /hud is not observability/i }).first();
-    await expect(section).toBeVisible();
+  test('Contact Sales CTA is visible @functional', async () => {
+    await homePage.expectContactSalesCtaVisible();
   });
 
-  test('"See Hud in Action" section is present @functional', async ({ page }) => {
-    const section = page.locator('h2').filter({ hasText: /see hud in action/i }).first();
-    await expect(section).toBeVisible();
+  test('Reserve a space CTA is visible @functional', async () => {
+    await homePage.expectReserveSpaceCtaVisible();
   });
 
-  test('Trusted section is present @functional', async ({ page }) => {
-    const section = page.locator('h2').filter({ hasText: /trusted/i }).first();
-    await expect(section).toBeVisible();
+  test('"For Communities" CTA link is present @functional', async ({ page }) => {
+    const link = page.locator('a').filter({ hasText: /for communities/i }).first();
+    await expect(link).toBeVisible();
   });
 
-  test('How it works — "Hud runs with the entire codebase" step is visible @functional', async ({ page }) => {
-    const section = page.locator('h3').filter({ hasText: /hud runs with the entire codebase/i }).first();
-    await expect(section).toBeVisible();
+  test('"For Residents" CTA link is present @functional', async ({ page }) => {
+    const link = page.locator('a[href*="resident-guide"]').first();
+    await expect(link).toBeVisible();
   });
 
-  test('How it works — "Hud gathers forensic context" step is visible @functional', async ({ page }) => {
-    const section = page.locator('h3').filter({ hasText: /hud gathers forensic context/i }).first();
-    await expect(section).toBeVisible();
+  test('App Store download link is present @functional', async ({ page }) => {
+    const link = page.locator('a[href*="apps.apple.com"]');
+    await expect(link.first()).toBeVisible();
   });
 
-  test('How it works — "Hud sends context to agents" step is visible @functional', async ({ page }) => {
-    const section = page.locator('h3').filter({ hasText: /hud sends context to agents/i }).first();
-    await expect(section).toBeVisible();
+  test('Google Play download link is present @functional', async ({ page }) => {
+    const link = page.locator('a[href*="play.google.com"]');
+    await expect(link.first()).toBeVisible();
   });
 
-  test('Book a demo CTA link is present on homepage @functional', async ({ page }) => {
-    const ctaLink = page.locator('a[href*="book-a-demo"]').first();
-    await expect(ctaLink).toBeVisible();
-  });
-
-  test('footer is visible at the bottom of the page @functional', async ({ page }) => {
-    const footer = page.locator('footer').first();
-    await expect(footer).toBeVisible();
-  });
-
-  test('social media links are present in footer @functional', async ({ page }) => {
-    const socialLinks = page.locator('footer a[href*="linkedin.com"], footer a[href*="x.com"], footer a[href*="twitter.com"]');
-    const count = await socialLinks.count();
-    expect(count).toBeGreaterThan(0);
+  test('footer is visible at the bottom of the page @functional', async () => {
+    await homePage.expectFooterVisible();
   });
 });

@@ -2,15 +2,13 @@ import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 /**
- * Reusable Page Object Model for hud.io legal pages.
- * Covers /legal/terms-of-service/ and /legal/privacy-policy/.
+ * Reusable Page Object Model for zarkparking.com legal pages.
+ * Covers /terms-and-conditions and /privacy-policy.
  */
 export class LegalPage extends BasePage {
-  constructor(page: Page, path: '/legal/terms-of-service/' | '/legal/privacy-policy/') {
+  constructor(page: Page, path: '/terms-and-conditions' | '/privacy-policy') {
     super(page, path);
   }
-
-  // ─── Locators ────────────────────────────────────────────────────────────────
 
   private get pageHeading(): Locator {
     return this.page.locator('h1').first();
@@ -20,18 +18,10 @@ export class LegalPage extends BasePage {
     return this.page.locator('h2');
   }
 
-  private get pageContent(): Locator {
-    return this.page.locator('main, article, .content, [class*="legal"]').first();
-  }
-
-  // ─── Actions ─────────────────────────────────────────────────────────────────
-
   async goto(): Promise<void> {
     await this.navigate();
     await this.page.waitForLoadState('domcontentloaded');
   }
-
-  // ─── Assertions ──────────────────────────────────────────────────────────────
 
   async expectPageHeadingVisible(): Promise<void> {
     await expect(this.pageHeading).toBeVisible();
@@ -44,10 +34,6 @@ export class LegalPage extends BasePage {
   async expectSectionHeadingsPresent(minCount: number): Promise<void> {
     const count = await this.sectionHeadings.count();
     expect(count).toBeGreaterThanOrEqual(minCount);
-  }
-
-  async expectContentPresent(): Promise<void> {
-    await expect(this.pageContent).toBeVisible();
   }
 
   async expectSectionVisible(text: string | RegExp): Promise<void> {

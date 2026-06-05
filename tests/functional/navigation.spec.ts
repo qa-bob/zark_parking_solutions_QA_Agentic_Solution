@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../../pages/HomePage';
 import { NavBar } from '../../pages/components/NavBar';
-import { AboutUsPage } from '../../pages/AboutUsPage';
-import { BookDemoPage } from '../../pages/BookDemoPage';
-import { BlogPage } from '../../pages/BlogPage';
+import { ZarkParkingPage } from '../../pages/ZarkParkingPage';
+import { ContactSalesPage } from '../../pages/ContactSalesPage';
+import { ResidentGuidePage } from '../../pages/ResidentGuidePage';
 
 test.describe('Navigation @functional', () => {
   let homePage: HomePage;
@@ -15,7 +15,7 @@ test.describe('Navigation @functional', () => {
     await homePage.goto();
   });
 
-  test('navigation bar is visible on homepage @functional', async () => {
+  test('navigation header is visible on homepage @functional', async () => {
     await nav.expectNavVisible();
   });
 
@@ -23,68 +23,76 @@ test.describe('Navigation @functional', () => {
     await nav.expectAllNavLinksVisible();
   });
 
-  test('Blog nav link points to the blog page @functional', async () => {
-    const href = await nav.getBlogHref();
-    expect(href).toMatch(/blog/);
+  test('Zark Parking nav link points to /short-term-parking @functional', async () => {
+    const href = await nav.getZarkParkingHref();
+    expect(href).toMatch(/short-term-parking/);
   });
 
-  test('Docs nav link points to docs.hud.io @functional', async () => {
-    const href = await nav.getDocsHref();
-    expect(href).toMatch(/docs\.hud\.io/);
+  test('Rentable Items nav link points to /rentable-items @functional', async () => {
+    const href = await nav.getRentableItemsHref();
+    expect(href).toMatch(/rentable-items/);
   });
 
-  test('Book a demo nav link points to book-a-demo page @functional', async () => {
-    const href = await nav.getBookDemoHref();
-    expect(href).toMatch(/book-a-demo/);
+  test('Parking Enforcement nav link points to /parking-enforcement @functional', async () => {
+    const href = await nav.getParkingEnforcementHref();
+    expect(href).toMatch(/parking-enforcement/);
   });
 
-  test('Log in nav link points to app.hud.io @functional', async () => {
-    const href = await nav.getLoginHref();
-    expect(href).toMatch(/app\.hud\.io/);
+  test('Resident Guide nav link points to /resident-guide @functional', async () => {
+    const href = await nav.getResidentGuideHref();
+    expect(href).toMatch(/resident-guide/);
   });
 
-  test('clicking About us navigates to about page @functional', async ({ page }) => {
-    await nav.clickAboutUs();
-    await expect(page).toHaveURL(/about-us/);
-    const aboutPage = new AboutUsPage(page);
-    await aboutPage.expectPageHeadingVisible();
+  test('Contact Sales nav link points to /contact-sales @functional', async () => {
+    const href = await nav.getContactSalesHref();
+    expect(href).toMatch(/contact-sales/);
   });
 
-  test('clicking Book a demo navigates to demo page @functional', async ({ page }) => {
-    await nav.clickBookDemo();
-    await expect(page).toHaveURL(/book-a-demo/);
-    const demoPage = new BookDemoPage(page);
-    await demoPage.expectFormVisible();
+  test('Reserve a space link points to app.zarkhq.com @functional', async () => {
+    const href = await nav.getReserveSpaceHref();
+    expect(href).toMatch(/app\.zarkhq\.com/);
   });
 
-  test('clicking Blog navigates to blog page @functional', async ({ page }) => {
-    await nav.clickBlog();
-    await expect(page).toHaveURL(/blog/);
-    const blogPage = new BlogPage(page);
-    await blogPage.expectCorrectTitle();
+  test('clicking Zark Parking navigates to the product page @functional', async ({ page }) => {
+    await nav.clickZarkParking();
+    await expect(page).toHaveURL(/short-term-parking/);
+    const zarkPage = new ZarkParkingPage(page);
+    await zarkPage.expectPageHeadingVisible();
   });
 
-  test('footer contains Terms of Service link @functional', async ({ page }) => {
-    const tosLink = page.locator('footer').getByRole('link', { name: /terms of service/i });
-    await expect(tosLink).toBeVisible();
-    const href = await tosLink.getAttribute('href');
-    expect(href).toMatch(/terms-of-service/);
+  test('clicking Contact Sales navigates to the contact form @functional', async ({ page }) => {
+    await nav.clickContactSales();
+    await expect(page).toHaveURL(/contact-sales/);
+    const contactPage = new ContactSalesPage(page);
+    await contactPage.expectFormVisible();
+  });
+
+  test('clicking Resident Guide navigates to the guide page @functional', async ({ page }) => {
+    await nav.clickResidentGuide();
+    await expect(page).toHaveURL(/resident-guide/);
+    const guidePage = new ResidentGuidePage(page);
+    await guidePage.expectPageHeadingVisible();
+  });
+
+  test('footer contains Terms and Conditions link @functional', async ({ page }) => {
+    const link = page.locator('footer').getByRole('link', { name: /terms and conditions/i });
+    await expect(link).toBeVisible();
+    const href = await link.getAttribute('href');
+    expect(href).toMatch(/terms-and-conditions/);
   });
 
   test('footer contains Privacy Policy link @functional', async ({ page }) => {
-    const privacyLink = page.locator('footer').getByRole('link', { name: /privacy policy/i });
-    await expect(privacyLink).toBeVisible();
-    const href = await privacyLink.getAttribute('href');
-    expect(href).toMatch(/privacy-policy/);
+    const link = page.locator('footer').getByRole('link', { name: /privacy policy/i });
+    await expect(link).toBeVisible();
   });
 
-  test('footer contains Contact us link @functional', async ({ page }) => {
-    const contactLink = page.locator('footer').getByRole('link', { name: /contact us/i });
-    await expect(contactLink).toBeVisible();
+  test('footer contains Contact Sales link @functional', async ({ page }) => {
+    const link = page.locator('footer').getByRole('link', { name: /contact sales/i });
+    await expect(link).toBeVisible();
   });
 
-  test('footer contains Careers link @functional', async ({ page }) => {
-    const careersLink = page.locator('footer').getByRole('link', { name: /careers/i });
-    await expect(careersLink).toBeVisible();
+  test('footer contains PMS Integrations link @functional', async ({ page }) => {
+    const link = page.locator('footer').getByRole('link', { name: /pms integrations/i });
+    await expect(link).toBeVisible();
   });
 });

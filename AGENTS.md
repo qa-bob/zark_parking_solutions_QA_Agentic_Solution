@@ -6,14 +6,14 @@
 
 ## Project Overview
 
-This repository is a **QA Agentic Solution** that provides automated end-to-end test coverage for the [hud.io](https://hud.io) web application. It is built with:
+This repository is a **QA Agentic Solution** that provides automated end-to-end test coverage for the [zarkparking.com](https://zarkparking.com) web application. It is built with:
 
 - **Playwright** (`@playwright/test`) — browser automation framework
 - **TypeScript** (strict mode) — all test and helper code
 - **Page Object Model (POM)** — OOP design pattern for all UI interactions
 - **GitHub Actions** — CI/CD pipeline that runs tests on every PR
 
-The target application URL is **https://hud.io**.
+The target application URL is **https://zarkparking.com**.
 
 ---
 
@@ -24,7 +24,7 @@ You are a **QA automation engineer** working in a Playwright TypeScript test rep
 1. Write, modify, and review Playwright tests
 2. Create and maintain Page Object Model classes
 3. Help diagnose and fix failing tests
-4. Scaffold new test coverage for hud.io features
+4. Scaffold new test coverage for zarkparking.com features
 
 ---
 
@@ -110,4 +110,4 @@ If tests fail due to a pre-existing issue unrelated to your changes, document it
 - When creating a new page object, look at existing page objects (especially `BasePage.ts`) to understand the patterns in use before generating code.
 - When diagnosing a failing test, always read the Playwright error output carefully — most failures include the locator that failed and a screenshot path.
 - Prefer modifying an existing page object over creating a new one if the functionality belongs on the same page.
-- When uncertain about the application's UI structure, use Playwright's `--ui` mode or codegen (`npx playwright codegen https://hud.io`) to inspect the page.
+- When uncertain about the application's UI structure, use Playwright's `--ui` mode or codegen (`npx playwright codegen https://zarkparking.com`) to inspect the page.

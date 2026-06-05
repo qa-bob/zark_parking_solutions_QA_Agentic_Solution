@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../../pages/HomePage';
 
-test.describe('hud.io Homepage @smoke', () => {
+test.describe('zarkparking.com Homepage @smoke', () => {
   let homePage: HomePage;
 
   test.beforeEach(async ({ page }) => {
@@ -20,12 +20,12 @@ test.describe('hud.io Homepage @smoke', () => {
     expect(response?.status()).toBeLessThan(400);
   });
 
-  test('URL is hud.io @smoke', async () => {
-    homePage.expectUrlContains('hud.io');
+  test('URL contains zarkparking.com @smoke', async () => {
+    await homePage.expectUrlContains('zarkparking.com');
   });
 
   test('main content section is present @smoke', async () => {
-    await homePage.expectHeroSectionVisible();
+    await homePage.expectMainContentVisible();
   });
 
   test('H1 heading is visible on the page @smoke', async () => {

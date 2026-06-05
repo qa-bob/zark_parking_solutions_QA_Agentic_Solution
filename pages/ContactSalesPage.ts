@@ -2,12 +2,13 @@ import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 /**
- * Page Object Model for the hud.io Contact Us page (/contact-us/).
- * Contains a form with: First Name, Last Name, Company, Business Email, Message.
+ * Page Object Model for /contact-sales — Contact Sales page with form.
+ * Form fields: firstname, lastname, email, phone, company,
+ *              property_community_name, of_units, message, address
  */
-export class ContactUsPage extends BasePage {
+export class ContactSalesPage extends BasePage {
   constructor(page: Page) {
-    super(page, '/contact-us/');
+    super(page, '/contact-sales');
   }
 
   // ─── Locators ────────────────────────────────────────────────────────────────
@@ -21,27 +22,39 @@ export class ContactUsPage extends BasePage {
   }
 
   private get firstNameInput(): Locator {
-    return this.page.getByPlaceholder('First Name*');
+    return this.page.locator('input[name="firstname"]');
   }
 
   private get lastNameInput(): Locator {
-    return this.page.getByPlaceholder('Last Name*');
-  }
-
-  private get companyInput(): Locator {
-    return this.page.getByPlaceholder('Company Name');
+    return this.page.locator('input[name="lastname"]');
   }
 
   private get emailInput(): Locator {
-    return this.page.getByPlaceholder('Business Email*');
+    return this.page.locator('input[name="email"]');
+  }
+
+  private get phoneInput(): Locator {
+    return this.page.locator('input[name="phone"]');
+  }
+
+  private get companyInput(): Locator {
+    return this.page.locator('input[name="company"]');
+  }
+
+  private get communityNameInput(): Locator {
+    return this.page.locator('input[name="property_community_name"]');
+  }
+
+  private get numberOfUnitsInput(): Locator {
+    return this.page.locator('input[name="of_units"]');
   }
 
   private get messageTextarea(): Locator {
-    return this.page.getByPlaceholder('Message');
+    return this.page.locator('textarea[name="message"]');
   }
 
   private get submitButton(): Locator {
-    return this.form.locator('button[type="submit"], input[type="submit"], button').last();
+    return this.form.locator('input[type="submit"], button[type="submit"]').first();
   }
 
   // ─── Actions ─────────────────────────────────────────────────────────────────
@@ -59,12 +72,24 @@ export class ContactUsPage extends BasePage {
     await this.lastNameInput.fill(value);
   }
 
+  async fillEmail(value: string): Promise<void> {
+    await this.emailInput.fill(value);
+  }
+
+  async fillPhone(value: string): Promise<void> {
+    await this.phoneInput.fill(value);
+  }
+
   async fillCompany(value: string): Promise<void> {
     await this.companyInput.fill(value);
   }
 
-  async fillEmail(value: string): Promise<void> {
-    await this.emailInput.fill(value);
+  async fillCommunityName(value: string): Promise<void> {
+    await this.communityNameInput.fill(value);
+  }
+
+  async fillNumberOfUnits(value: string): Promise<void> {
+    await this.numberOfUnitsInput.fill(value);
   }
 
   async fillMessage(value: string): Promise<void> {
@@ -72,19 +97,17 @@ export class ContactUsPage extends BasePage {
   }
 
   async fillForm(data: {
-    firstName: string;
-    lastName: string;
-    company: string;
-    email: string;
-    message?: string;
+    firstName: string; lastName: string; email: string; phone: string;
+    company: string; communityName: string; numberOfUnits: string; message: string;
   }): Promise<void> {
     await this.fillFirstName(data.firstName);
     await this.fillLastName(data.lastName);
-    await this.fillCompany(data.company);
     await this.fillEmail(data.email);
-    if (data.message) {
-      await this.fillMessage(data.message);
-    }
+    await this.fillPhone(data.phone);
+    await this.fillCompany(data.company);
+    await this.fillCommunityName(data.communityName);
+    await this.fillNumberOfUnits(data.numberOfUnits);
+    await this.fillMessage(data.message);
   }
 
   async clickSubmit(): Promise<void> {
@@ -92,6 +115,10 @@ export class ContactUsPage extends BasePage {
   }
 
   // ─── Assertions ──────────────────────────────────────────────────────────────
+
+  async expectPageHeadingVisible(): Promise<void> {
+    await expect(this.pageHeading).toBeVisible();
+  }
 
   async expectFormVisible(): Promise<void> {
     await expect(this.form).toBeVisible();
@@ -101,36 +128,33 @@ export class ContactUsPage extends BasePage {
     await expect(this.firstNameInput).toBeVisible();
   }
 
-  async expectLastNameInputVisible(): Promise<void> {
-    await expect(this.lastNameInput).toBeVisible();
-  }
-
   async expectEmailInputVisible(): Promise<void> {
     await expect(this.emailInput).toBeVisible();
   }
 
-  async expectMessageFieldVisible(): Promise<void> {
-    await expect(this.messageTextarea).toBeVisible();
+  async expectPhoneInputVisible(): Promise<void> {
+    await expect(this.phoneInput).toBeVisible();
   }
 
-  async expectAllFieldsVisible(): Promise<void> {
+  async expectAllRequiredFieldsVisible(): Promise<void> {
     await this.expectFirstNameInputVisible();
-    await this.expectLastNameInputVisible();
+    await expect(this.lastNameInput).toBeVisible();
     await this.expectEmailInputVisible();
-    await this.expectMessageFieldVisible();
+    await this.expectPhoneInputVisible();
   }
 
   async expectCorrectTitle(): Promise<void> {
-    await expect(this.page).toHaveTitle('Contact us - Hud');
+    await expect(this.page).toHaveTitle("Let's Get Zarking!");
   }
 
-  async expectFieldFilled(field: 'firstName' | 'lastName' | 'email' | 'message', value: string): Promise<void> {
-    const locatorMap = {
+  async expectFieldValue(field: 'firstName' | 'lastName' | 'email' | 'phone' | 'company', value: string): Promise<void> {
+    const map = {
       firstName: this.firstNameInput,
       lastName: this.lastNameInput,
       email: this.emailInput,
-      message: this.messageTextarea,
+      phone: this.phoneInput,
+      company: this.companyInput,
     };
-    await expect(locatorMap[field]).toHaveValue(value);
+    await expect(map[field]).toHaveValue(value);
   }
 }

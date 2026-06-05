@@ -1,6 +1,6 @@
-# hud.io — QA Agentic Solution
+# zarkparking.com — QA Agentic Solution
 
-> End-to-end test automation for [hud.io](https://hud.io) — built with **Playwright**, **TypeScript**, and a **Page Object Model (POM)** design pattern. Powered by **GitHub Copilot** for AI-assisted test generation and maintenance.
+> End-to-end test automation for [zarkparking.com](https://zarkparking.com) — built with **Playwright**, **TypeScript**, and a **Page Object Model (POM)** design pattern. Powered by **GitHub Copilot** for AI-assisted test generation and maintenance.
 
 ---
 
@@ -19,7 +19,7 @@
 
 ## 🎯 Purpose
 
-This repository provides automated end-to-end QA coverage for the **hud.io** web application. It is built as a GitHub Copilot **agentic solution**, meaning:
+This repository provides automated end-to-end QA coverage for the **zarkparking.com** web application. It is built as a GitHub Copilot **agentic solution**, meaning:
 
 - GitHub Copilot can autonomously generate, maintain, and extend tests using custom instructions
 - All tests follow a **Page Object Model (POM)** design pattern for maintainability and reusability
@@ -140,7 +140,7 @@ npx playwright test tests/smoke/homepage.spec.ts
 npx playwright show-report
 
 # Generate tests interactively (Playwright codegen)
-npx playwright codegen https://hud.io
+npx playwright codegen https://zarkparking.com
 ```
 
 ---
@@ -167,7 +167,7 @@ Example: `feature/login-page-pom`, `fix/checkout-smoke-test`
 Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
-feat(login): add POM class for hud.io login page
+feat(login): add POM class for zarkparking.com login page
 fix(smoke): correct selector for nav bar link
 chore(deps): update playwright to v1.44
 test(regression): add regression suite for dashboard
@@ -229,7 +229,7 @@ cd zark_parking_solutions_QA_Agentic_Solution
 copilot
 
 # Example prompts to try:
-# "Add a smoke test for the hud.io homepage"
+# "Add a smoke test for the zarkparking.com homepage"
 # "Create a page object for the login page at /login"
 # "Why is this test failing?" (paste error output)
 # "Review my changes before I submit a PR"
@@ -257,4 +257,4 @@ copilot
 
 ---
 
-*Part of the Phoenix Startup QA Agentic Solutions project. Target application: [hud.io](https://hud.io)*
+*Part of the Phoenix Startup QA Agentic Solutions project. Target application: [zarkparking.com](https://zarkparking.com)*

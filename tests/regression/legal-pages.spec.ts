@@ -2,45 +2,45 @@ import { test } from '@playwright/test';
 import { LegalPage } from '../../pages/LegalPage';
 
 test.describe('Legal Pages @regression', () => {
-  test.describe('Terms of Service', () => {
+  test.describe('Terms and Conditions', () => {
     let tosPage: LegalPage;
 
     test.beforeEach(async ({ page }) => {
-      tosPage = new LegalPage(page, '/legal/terms-of-service/');
+      tosPage = new LegalPage(page, '/terms-and-conditions');
       await tosPage.goto();
     });
 
-    test('Terms of Service page has correct title @regression', async () => {
-      await tosPage.expectTitle('Terms of service - Hud');
+    test('Terms and Conditions page has correct title @regression', async () => {
+      await tosPage.expectTitle('Terms and Conditions');
     });
 
-    test('Terms of Service H1 heading is visible @regression', async () => {
+    test('Terms and Conditions H1 heading is visible @regression', async () => {
       await tosPage.expectPageHeadingVisible();
-      await tosPage.expectPageHeadingText('Terms of service');
+      await tosPage.expectPageHeadingText('Terms');
     });
 
-    test('Terms of Service has at least 5 section headings @regression', async () => {
-      await tosPage.expectSectionHeadingsPresent(5);
+    test('Terms and Conditions has at least 6 section headings @regression', async () => {
+      await tosPage.expectSectionHeadingsPresent(6);
     });
 
-    test('"Acceptance of Terms" section is present @regression', async () => {
-      await tosPage.expectSectionVisible(/acceptance of terms/i);
+    test('"Description of Services" section is present @regression', async () => {
+      await tosPage.expectSectionVisible(/description of services/i);
     });
 
-    test('"Use Restrictions" section is present @regression', async () => {
-      await tosPage.expectSectionVisible(/use restrictions/i);
+    test('"Definitions" section is present @regression', async () => {
+      await tosPage.expectSectionVisible(/definitions/i);
     });
 
-    test('"Intellectual Property" section is present @regression', async () => {
-      await tosPage.expectSectionVisible(/intellectual property/i);
+    test('"Privacy" section is present @regression', async () => {
+      await tosPage.expectSectionVisible(/privacy/i);
     });
 
-    test('"Disclaimers" section is present @regression', async () => {
-      await tosPage.expectSectionVisible(/disclaimers/i);
+    test('"Fees and Payment" section is present @regression', async () => {
+      await tosPage.expectSectionVisible(/fees and payment/i);
     });
 
-    test('"Limitation of Liability" section is present @regression', async () => {
-      await tosPage.expectSectionVisible(/limitation of liability/i);
+    test('"Prohibited Conduct" section is present @regression', async () => {
+      await tosPage.expectSectionVisible(/prohibited conduct/i);
     });
   });
 
@@ -48,12 +48,12 @@ test.describe('Legal Pages @regression', () => {
     let privacyPage: LegalPage;
 
     test.beforeEach(async ({ page }) => {
-      privacyPage = new LegalPage(page, '/legal/privacy-policy/');
+      privacyPage = new LegalPage(page, '/privacy-policy');
       await privacyPage.goto();
     });
 
     test('Privacy Policy page has correct title @regression', async () => {
-      await privacyPage.expectTitle('Privacy Policy - Hud');
+      await privacyPage.expectTitle('Privacy Policy');
     });
 
     test('Privacy Policy H1 heading is visible @regression', async () => {
@@ -65,20 +65,20 @@ test.describe('Legal Pages @regression', () => {
       await privacyPage.expectSectionHeadingsPresent(5);
     });
 
-    test('"Summary" section is present @regression', async () => {
-      await privacyPage.expectSectionVisible(/summary/i);
+    test('"Collection of Information" section is present @regression', async () => {
+      await privacyPage.expectSectionVisible(/collection of information/i);
     });
 
-    test('"Information We Collect" section is present @regression', async () => {
-      await privacyPage.expectSectionVisible(/information we collect/i);
+    test('"Use of Information" section is present @regression', async () => {
+      await privacyPage.expectSectionVisible(/use of information/i);
     });
 
-    test('"Cookies" section is present @regression', async () => {
-      await privacyPage.expectSectionVisible(/cookies/i);
+    test('"Sharing of Information" section is present @regression', async () => {
+      await privacyPage.expectSectionVisible(/sharing of information/i);
     });
 
-    test('"Information Sharing" section is present @regression', async () => {
-      await privacyPage.expectSectionVisible(/information sharing/i);
+    test('"Contact Us" section is present @regression', async () => {
+      await privacyPage.expectSectionVisible(/contact us/i);
     });
   });
 });

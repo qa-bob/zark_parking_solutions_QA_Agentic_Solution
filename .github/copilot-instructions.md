@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-This repository is a **QA Agentic Solution** that tests the [hud.io](https://hud.io) web application. It uses **Playwright** with **TypeScript**, a **Page Object Model (POM)** design pattern, and **OOP** principles throughout.
+This repository is a **QA Agentic Solution** that tests the [zarkparking.com](https://zarkparking.com) web application. It uses **Playwright** with **TypeScript**, a **Page Object Model (POM)** design pattern, and **OOP** principles throughout.
 
 ---
 

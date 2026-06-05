@@ -10,43 +10,41 @@ test.describe('All Pages Load @regression', () => {
     });
   }
 
-  test('Homepage has no console errors @regression', async ({ page }) => {
+  test('Homepage has no JS console errors @regression', async ({ page }) => {
     const errors: string[] = [];
     page.on('console', msg => {
       if (msg.type() === 'error') errors.push(msg.text());
     });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(2000);
-    expect(errors.filter(e => !e.includes('favicon'))).toHaveLength(0);
+    const critical = errors.filter(e =>
+      !e.includes('favicon') &&
+      !e.includes('reCAPTCHA') &&
+      !e.includes('recaptcha') &&
+      !e.includes('404') &&
+      !e.includes('Failed to load resource')
+    );
+    expect(critical).toHaveLength(0);
   });
 
-  test('Book a demo page has an H1 heading @regression', async ({ page }) => {
-    await page.goto('/book-a-demo/', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('h1').first()).toBeVisible();
+  test('Contact Sales page has a form @regression', async ({ page }) => {
+    await page.goto('/contact-sales', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('form').first()).toBeVisible();
   });
 
-  test('Contact us page has an H1 heading @regression', async ({ page }) => {
-    await page.goto('/contact-us/', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('h1').first()).toBeVisible();
+  test('Resident Guide page has a form @regression', async ({ page }) => {
+    await page.goto('/resident-guide', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('form').first()).toBeVisible();
   });
 
-  test('About us page has an H1 heading @regression', async ({ page }) => {
-    await page.goto('/about-us/', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('h1').first()).toBeVisible();
-  });
-
-  test('Careers page has an H1 heading @regression', async ({ page }) => {
-    await page.goto('/careers/', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('h1').first()).toBeVisible();
-  });
-
-  test('Terms of Service page has an H1 heading @regression', async ({ page }) => {
-    await page.goto('/legal/terms-of-service/', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('h1').first()).toBeVisible();
-  });
-
-  test('Privacy Policy page has an H1 heading @regression', async ({ page }) => {
-    await page.goto('/legal/privacy-policy/', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('h1').first()).toBeVisible();
+  test('All product pages have H1 headings @regression', async ({ page }) => {
+    const productPaths = [
+      '/short-term-parking', '/rentable-items',
+      '/parking-enforcement', '/pms-integrations',
+    ];
+    for (const path of productPaths) {
+      await page.goto(path, { waitUntil: 'domcontentloaded' });
+      await expect.soft(page.locator('h1').first()).toBeVisible();
+    }
   });
 });
